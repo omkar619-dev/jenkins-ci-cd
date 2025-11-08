@@ -4,6 +4,7 @@ import com.example.omtechie.SpringJPAProj.common.AuditorAwareImpl;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.AuditorAware;
@@ -16,7 +17,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories(repositoryFactoryBeanClass = EnversRevisionRepositoryFactoryBean.class)
 @EnableEncryptableProperties
 //@EnableCaching
-public class SpringJpaProjApplication {
+public class SpringJpaProjApplication extends SpringBootServletInitializer {
 
 	@Bean
 	public AuditorAware<String> auditorAware(){

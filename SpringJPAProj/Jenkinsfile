@@ -1,0 +1,57 @@
+pipeline {
+    agent any
+    tools {
+        // Ensure you have a global tool configuration named 'maven' in Jenkins
+        maven "maven"
+    }
+    stages {
+
+// --- SCM Checkout Stage ---
+        stage('SCM Checkout') {
+            steps {
+                // Using the recommended 'git' step instead of scmGit for simplicity
+                git url: 'https://github.com/omkar619-dev/jenkins-ci-cd.git', branch: 'main'
+            }
+        }
+// ---
+
+// --- Maven Build Stage ---
+        stage('Maven Build') {
+            steps {
+                // Use 'dir' to change to the project subdirectory before running Maven.
+                // This is generally safer than using 'cd' inside bat.
+                dir('SpringJPAProj') {
+                    // Use 'bat' for Windows. Assuming the WAR is now built successfully.
+                    // IMPORTANT: Add '-DskipTests' if you haven't fixed the failing test yet.
+                    bat 'mvn clean install'
+                    // If the test (getAllProductsTest) is still failing, use the command below:
+                    // bat 'mvn clean install -DskipTests'
+                }
+            }
+        }
+
+// ---
+
+// --- Deployment Stage ---
+        stage('Deploy to container') {
+            steps {
+                // Ensure the 'dir' step navigates to the 'target' directory where the WAR is located.
+                dir('SpringJPAProj/target') {
+                    deploy adapters: [
+                        tomcat9(
+
+                            url: 'http://localhost:9090',
+                            credentialsId: '3cee8e8a-cdc7-423e-a4a9-01d0eb55b159',
+
+                        )
+                    ],
+                    // Target the exact WAR file name produced by Maven's install goal.
+                    war: 'SpringJPAProj-0.0.1-SNAPSHOT.war'
+                }
+            }
+        }
+
+// ---
+
+    }
+}

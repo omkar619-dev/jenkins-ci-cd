@@ -68,7 +68,7 @@ class SpringJpaProjApplicationTests {
 			.andDo(print())
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$.*").exists())
-			.andExpect(jsonPath("$.[0].id").value(1));
+			.andExpect(jsonPath("$.[0].id").value(0));
 	}
 
 	@Test

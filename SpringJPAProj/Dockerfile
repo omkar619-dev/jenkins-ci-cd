@@ -1,4 +1,4 @@
-FROM openjdk:17-jdk
+FROM openjdk:17-jdk-slim
 WORKDIR /appContainer
 COPY cert.txt /appContainer/cert.txt
 COPY target/jenkinsCICD.jar /appContainer

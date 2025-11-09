@@ -104,6 +104,6 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>jenkinsCICD</finalName>
 	</build>
-	<packaging>war</packaging>
 </project>
